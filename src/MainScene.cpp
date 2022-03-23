@@ -2,6 +2,7 @@
 
 void MainScene::update () {
     float cameraSpeed = 0.05f;
+
 	if (keypress (GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(window, GL_TRUE);
 
@@ -62,6 +63,7 @@ void MainScene::update () {
     if (keypress (GLFW_KEY_5)) {
         cameraPos = glm::vec3 (0.0f, 3.0f, 0.0f);
         cameraFront = glm::vec3 (0.0f, -1.0f, 0.0f);
+        cameraUp = glm::vec3 (0.0f, 0.0f, 1.0f);
         cameraUpdated = true;
     }
 
@@ -71,8 +73,6 @@ void MainScene::update () {
 
         glUniformMatrix4fv (viewLoc, 1, GL_FALSE, glm::value_ptr (view));
         glUniformMatrix4fv (projLoc, 1, GL_FALSE, glm::value_ptr (projection));
-
-        std::cout << "Camera Front: " << cameraFront.x << " - " << cameraFront.y << " - " << cameraFront.z << std::endl;
 
         cameraUpdated = false;
     }
@@ -105,6 +105,8 @@ float MainScene::roll = 0.0f;
 bool MainScene::cameraUpdated = false;
 
 void MainScene::mouse_callback (GLFWwindow* window, double xpos, double ypos) {
+    cameraUp = glm::vec3 (0.0f, 1.0f, 0.0f);
+
     if (lastX == MAXFLOAT || lastY == MAXFLOAT) {
         lastX = xpos;
         lastY = ypos;
@@ -139,6 +141,8 @@ void MainScene::mouse_callback (GLFWwindow* window, double xpos, double ypos) {
 float MainScene::fov = 45.0f;
 
 void MainScene::scroll_callback (GLFWwindow *window, double xoffset, double yoffset) {
+    cameraUp = glm::vec3 (0.0f, 1.0f, 0.0f);
+
     if (fov >= 1.0f && fov <= 45.0f) fov -= yoffset;
     if (fov <= 1.0f) fov = 1.0f;
     if (fov >= 45.0f) fov = 45.0f;
