@@ -107,11 +107,11 @@ void Scene::setupCamera () {
     glUniformMatrix4fv (modelLoc, 1, GL_FALSE, glm::value_ptr (model));
 
     view = glm::lookAt (glm::vec3 (0.0f, 0.0f, 3.0f),
-                        glm::vec3 (0.0f, 0.0f, 0.0f),
+                        glm::vec3 (0.0f, 0.0f, -1.0f),
                         glm::vec3 (0.01, 1.0f, 0.0f));
     glUniformMatrix4fv (viewLoc, 1, GL_FALSE, glm::value_ptr (view));
 
-    projection = glm::perspective (45.0f, (GLfloat) Scene::window_width / (GLfloat) Scene::window_height, 0.1f, 100.0f);
+    projection = glm::perspective (glm::radians (45.0f), (GLfloat) Scene::window_width / (GLfloat) Scene::window_height, 0.1f, 100.0f);
     glUniformMatrix4fv (projLoc, 1, GL_FALSE, glm::value_ptr (projection));
 
 	glEnable (GL_DEPTH_TEST);
